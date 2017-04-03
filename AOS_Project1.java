@@ -8,7 +8,7 @@ import com.sun.nio.sctp.*;
 Shreyas Lakshminarayana
 */
 
-class AOS_Project1{
+class AOS_Project1 {
 	
 	public Server[] serve;						//Objects of server class
 	public ArrayList<Client> intercl;				//Objects of client class
@@ -138,7 +138,6 @@ class AOS_Project1{
 			try
 			{
 				//Create socket depending on the path
-				//System.out.println("Entered Client");
 				if(flag == 1)					//To send the process’s own token
 				{ 	
 					flag=0;
@@ -178,11 +177,9 @@ class AOS_Project1{
 				}
 				else						//To send other machines’s token
 				{
-					//System.out.println("Entering else loop in client");
 					if(!interpath.equals("-1"))
 					{
 						int next = (int) (interpath.charAt(0)) - 49;
-						//System.out.println("Trying to create socket with "+node.get(next));
 						ByteBuffer byteBuffer1 = ByteBuffer.allocate(MESSAGE_SIZE);
 						SocketAddress socketAddress = new InetSocketAddress(node.get(next),portnum.get(next));
 						SctpChannel sctpChannel1 = SctpChannel.open();
@@ -202,7 +199,6 @@ class AOS_Project1{
 						byteBuffer1.put(message.getBytes());
 						byteBuffer1.flip();
 						sctpChannel1.send(byteBuffer1,messageInfo);
-						//System.out.println("Created socket to "+node.get(next)+" at port number "+portnum.get(next));
 					}
 					else
 					{
@@ -218,9 +214,7 @@ class AOS_Project1{
 						byteBuffer2.put(message.getBytes());
 						byteBuffer2.flip();
 						sctpChannel2.send(byteBuffer2,messageInfo);
-						//System.out.println("Created socket to "+node.get(sendr)+" at port number "+portno);
-					}
-					
+					}					
 				}
 			}
 			catch(IOException ex)
@@ -263,10 +257,8 @@ class AOS_Project1{
 				ByteBuffer byteBuffer = ByteBuffer.allocate(MESSAGE_SIZE);
 				MessageInfo messageInfo = sctpChannel.receive(byteBuffer,null,null);
 				String str = byteToString(byteBuffer);
-				//System.out.println("Input is: "+str);
 				if((str.substring(0,9)).equals("I am done"))
 				{
-					//System.out.println(str);
 					cnt++;
 					if(cnt==n && exitflag ==1)
 						kill();
@@ -290,7 +282,6 @@ class AOS_Project1{
 						for(int g=0;g<node.size();g++)
 						{
 							int p=0;
-							//System.out.println("Our ip address is: "+InetAddress.getLocalHost().getHostName());
 							while(p<5)
 							{
 								try
@@ -299,7 +290,6 @@ class AOS_Project1{
 									{
 										if(!hash.containsKey(node.get(g)))
 										{
-											//System.out.println("I am trying to connect to "+node.get(g)+" at port number "+portnum.get(g));
 											SocketAddress socketAddress1 = new InetSocketAddress(node.get(g),portnum.get(g));
 											ByteBuffer byteBuffer13 = ByteBuffer.allocate(MESSAGE_SIZE);
 											SctpChannel sctpChannel13 = SctpChannel.open();
@@ -310,7 +300,6 @@ class AOS_Project1{
 											byteBuffer13.put(message.getBytes());
 											byteBuffer13.flip();
 											sctpChannel13.send(byteBuffer13,messageInfo1);
-											//System.out.println("Sent message to: "+node.get(g)+" at port number "+portnum.get(g));
 										}
 									}
 								}
@@ -340,16 +329,12 @@ class AOS_Project1{
 						String pt = wds[3];
 						prt = Integer.parseInt(pt.substring(0,4));
 						intersum = Integer.parseInt(wds[0]);
-						//System.out.println("Before addition "+intersum);
 						intersum += lvalue;
-						//System.out.println("After "+intersum);
 						interpath = wds[1];
-						//System.out.println("The path to be taken is: "+interpath);
 						Client temp = new Client(lvalue,no,-1,intersum,sender,prt,interpath);
 						intercl.add(temp);
 						Thread l = new Thread(temp);
 						cli.add(l);
-						//System.out.println("Starting client from Server");
 						l.start();
 					}
 				} 
@@ -421,4 +406,3 @@ class AOS_Project1{
 		AOS_Project1 project = new AOS_Project1();   
 	}
 }
-
