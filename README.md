@@ -1,6 +1,6 @@
-				      ==========
+				          ==========
     					ReadMe
-				      ==========
+				          ==========
 
 This program implenents a distributed system where it computes the sum of label values of all processes defined by the path specified in the config file for that process. This can be converted into an FTP by assigning a file to a process rather than a label.
 
